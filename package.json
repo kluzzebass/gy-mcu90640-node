@@ -1,0 +1,26 @@
+{
+  "name": "gy-mcu90640-node",
+  "version": "1.0.0",
+  "description": "Handles serial communication with the MLX90540 based GY-MCU90640 infrared camera module.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kluzzebass/GY-MCU90640-node.git"
+  },
+  "keywords": [
+    "infrared",
+    "serial"
+  ],
+  "author": "Jan Fredrik Leversund <kluzz@radical.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kluzzebass/GY-MCU90640-node/issues"
+  },
+  "homepage": "https://github.com/kluzzebass/GY-MCU90640-node#readme"
+}
