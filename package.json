@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,13 @@
   "bugs": {
     "url": "https://github.com/kluzzebass/GY-MCU90640-node/issues"
   },
-  "homepage": "https://github.com/kluzzebass/GY-MCU90640-node#readme"
+  "homepage": "https://github.com/kluzzebass/GY-MCU90640-node#readme",
+  "dependencies": {
+    "serialport": "^8.0.5"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^6.7.1",
+    "mocha": "^6.2.2"
+  }
 }
