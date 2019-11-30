@@ -1,34 +1,32 @@
 {
-  "name": "gy-mcu90640-node",
-  "version": "1.0.0",
-  "description": "Handles serial communication with the MLX90540 based GY-MCU90640 infrared camera module.",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kluzzebass/GY-MCU90640-node.git"
-  },
-  "keywords": [
-    "infrared",
-    "serial"
-  ],
-  "author": "Jan Fredrik Leversund <kluzz@radical.org>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kluzzebass/GY-MCU90640-node/issues"
-  },
-  "homepage": "https://github.com/kluzzebass/GY-MCU90640-node#readme",
-  "dependencies": {
-    "serialport": "^8.0.5"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^6.7.1",
-    "mocha": "^6.2.2"
-  }
+	"name": "gy-mcu90640-node",
+	"version": "1.0.0",
+	"description": "Handles serial communication with the MLX90540 based GY-MCU90640 infrared camera module.",
+	"main": "index.js",
+	"directories": {
+		"doc": "docs"
+	},
+	"scripts": {
+		"test": "node test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kluzzebass/GY-MCU90640-node.git"
+	},
+	"keywords": [
+		"infrared",
+		"serial"
+	],
+	"author": "Jan Fredrik Leversund <kluzz@radical.org>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/kluzzebass/GY-MCU90640-node/issues"
+	},
+	"homepage": "https://github.com/kluzzebass/GY-MCU90640-node#readme",
+	"dependencies": {
+		"serialport": "^8.0.5"
+	},
+	"devDependencies": {
+		"eslint": "^6.7.1"
+	}
 }
