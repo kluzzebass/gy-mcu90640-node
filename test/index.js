@@ -1,4 +1,6 @@
+
 const camera = require('../index.js')('/dev/serial0', {
+  updateFrequency: 1,
   onEmissivity: em => {
     console.log('Emissivity:', em)
   },
@@ -10,7 +12,7 @@ const camera = require('../index.js')('/dev/serial0', {
 
 // console.log(camera)
 
-camera.automatic()
+camera.changeUpdateFrequency(0.5, true)
 camera.emissivity()
 camera.emissivity(0.95)
 camera.emissivity()

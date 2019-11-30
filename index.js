@@ -40,15 +40,8 @@ module.exports = (dev, options = {}) => {
   this.buflen = 0 // Start off with empty buffer
   this.port = null
   this.bitRate = options.bitRate || defaults.bitRate
-  this.updateFrequency = options.updateFrequency || defaults.updateFrequency
   this.onTemperatures = options.onTemperatures && options.onTemperatures instanceof Function ? options.onTemperatures : null
   this.onEmissivity = options.onEmissivity && options.onEmissivity instanceof Function ? options.onEmissivity : null
-
-  // Perform some rudimentary checks
-  if (!bitRates[this.bitRate])
-    throw TypeError(`Bitrate error. Use one of: ${Object.keys(bitRates).join(', ')}`)
-  if (!updateFrequencies[this.updateFrequency])
-    throw TypeError(`Update frequency error. Use one of: ${Object.keys(updateFrequencies).join(', ')}`)
 
   this.save = () => {
     this.port.write(commands.save)
@@ -76,7 +69,23 @@ module.exports = (dev, options = {}) => {
     this.port.write(commands.automatic)
   }
 
-  // TODO: add update frequency command
+  this.changeUpdateFrequency = (updateFrequency, write = false) => {
+    if (updateFrequencies[updateFrequency]) {
+      this.updateFrequency = updateFrequency
+      if (write) {
+        this.port.write(updateFrequencies[updateFrequency])
+      }
+    } else {
+      throw TypeError(`Update frequency error. Use one of: ${Object.keys(updateFrequencies).join(', ')}`)
+    }
+  }
+
+  this.changeUpdateFrequency(options.updateFrequency || defaults.updateFrequency)
+
+  // Perform some rudimentary checks
+  if (!bitRates[this.bitRate])
+    throw TypeError(`Bitrate error. Use one of: ${Object.keys(bitRates).join(', ')}`)
+
   // TODO: add change baud rate command
 
   this.port = new SerialPort(this.dev, {
@@ -99,8 +108,8 @@ module.exports = (dev, options = {}) => {
     // Append data to buffer
     this.buflen += data.copy(this.buf, this.buflen)
 
+    // Examine the data buffer and handle all located frames.
     let i = 0
-
     while (this.buflen && i <= this.buflen - 4) {
 
       // Look for frame header
@@ -124,7 +133,7 @@ module.exports = (dev, options = {}) => {
             // Check if the sums match
             if (sum === frameSum) {
 
-              // handle temperature frame, plz
+              // Handle temperature frame
               if (this.onTemperatures) {
                 const temperatures = []
                 for (let j = 0; j < temperaturesCount; j++) {
@@ -154,7 +163,7 @@ module.exports = (dev, options = {}) => {
 
           // Well, is it?
           if (sum === frameSum) {
-            // handle emissivity frame, plz
+            // Handle emissivity frame
             if (this.onEmissivity) {
               this.onEmissivity(em / 100)
             }
@@ -172,7 +181,7 @@ module.exports = (dev, options = {}) => {
         i++
       }
 
-      // Throw away some bytes if need be.
+      // Throw away any processed bytes.
       if (i) {
         const remainder = this.buflen - i
         if (remainder) {
