@@ -40,6 +40,7 @@ module.exports = (dev, options = {}) => {
   this.buflen = 0 // Start off with empty buffer
   this.port = null
   this.bitRate = options.bitRate || defaults.bitRate
+
   this.onTemperatures = options.onTemperatures && options.onTemperatures instanceof Function ? options.onTemperatures : null
   this.onEmissivity = options.onEmissivity && options.onEmissivity instanceof Function ? options.onEmissivity : null
 
@@ -69,7 +70,7 @@ module.exports = (dev, options = {}) => {
     this.port.write(commands.automatic)
   }
 
-  this.changeUpdateFrequency = (updateFrequency, write = false) => {
+  this.changeUpdateFrequency = (updateFrequency, write = true) => {
     if (updateFrequencies[updateFrequency]) {
       this.updateFrequency = updateFrequency
       if (write) {
@@ -80,7 +81,7 @@ module.exports = (dev, options = {}) => {
     }
   }
 
-  this.changeUpdateFrequency(options.updateFrequency || defaults.updateFrequency)
+  this.changeUpdateFrequency(options.updateFrequency || defaults.updateFrequency, false)
 
   // Perform some rudimentary checks
   if (!bitRates[this.bitRate])
@@ -142,7 +143,8 @@ module.exports = (dev, options = {}) => {
                 }
                 const ambient = this.buf.readInt16LE(i + ambientOffset) / 100
 
-                this.onTemperatures(temperatures, ambient)
+                // Push the callback onto the event loop
+                setImmediate(this.onTemperatures, temperatures, ambient)
               }
 
               // Advance past the temperatures frame
@@ -152,7 +154,9 @@ module.exports = (dev, options = {}) => {
               i++
             }
           } else {
-            // Not enough data; terminate loop
+            // Not enough data; terminate loop, but first, flush processed data
+            if (i)
+              this.flush(i)
             break
           }
         } else {
@@ -165,7 +169,8 @@ module.exports = (dev, options = {}) => {
           if (sum === frameSum) {
             // Handle emissivity frame
             if (this.onEmissivity) {
-              this.onEmissivity(em / 100)
+                // Push the callback onto the event loop
+                setImmediate(this.onEmissivity, em / 100)
             }
 
             // Advance past the emissivity frame
@@ -183,15 +188,21 @@ module.exports = (dev, options = {}) => {
 
       // Throw away any processed bytes.
       if (i) {
-        const remainder = this.buflen - i
-        if (remainder) {
-          this.buflen = this.buf.copy(this.buf, 0, i, i + remainder)
-        }
-        this.buflen = remainder
+        this.flush(i)
         i = 0
       }
     }
   })
+
+  this.flush = i => {
+    if (i) {
+      const remainder = this.buflen - i
+      if (remainder) {
+        this.buflen = this.buf.copy(this.buf, 0, i, i + remainder)
+      }
+      this.buflen = remainder
+    }
+  }
 
   return this
 }
