@@ -21,6 +21,4 @@ setTimeout(camera.automatic, 3500)
 
 setTimeout(camera.query, 10000)
 
-setTimeout(() => {
-  process.exit(0)
-}, 12000)
+setTimeout(() => process.exit(0), 12000)
