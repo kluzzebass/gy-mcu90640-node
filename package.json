@@ -11,7 +11,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/kluzzebass/GY-MCU90640-node.git"
+		"url": "git+https://github.com/kluzzebass/gy-mcu90640-node.git"
 	},
 	"keywords": [
 		"infrared",
@@ -20,9 +20,9 @@
 	"author": "Jan Fredrik Leversund <kluzz@radical.org>",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/kluzzebass/GY-MCU90640-node/issues"
+		"url": "https://github.com/kluzzebass/gy-mcu90640-node/issues"
 	},
-	"homepage": "https://github.com/kluzzebass/GY-MCU90640-node#readme",
+	"homepage": "https://github.com/kluzzebass/gy-mcu90640-node#readme",
 	"dependencies": {
 		"serialport": "^8.0.5"
 	},
