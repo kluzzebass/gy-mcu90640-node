@@ -96,7 +96,7 @@ module.exports = (dev, options = {}) => {
 
   // open errors will be emitted as an error event
   this.port.on('error', err => {
-    console.error('Error: ', err.message);
+    console.error('Error: ', err.message)
   })
 
   this.port.on('open', () => {

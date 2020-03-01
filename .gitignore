@@ -105,3 +105,8 @@ dist
 
 # Visual Studio Code
 .vscode
+
+# Max OS
+.DS_Store
+._.DS_Store
+

@@ -26,7 +26,7 @@ const camera = require('gy-mcu90640-node')('/dev/serial0', {
 // Set target emissivity.
 setTimeout(camera.emissivity, 0, 0.95)
 
-// Request a single frame after 100s (the module needs a bit of time to react)
+// Request a single frame after 100ms (the module needs a bit of time to react)
 setTimeout(camera.query, 100)
 
 // Request emissivity
