@@ -24,9 +24,9 @@
 	},
 	"homepage": "https://github.com/kluzzebass/gy-mcu90640-node#readme",
 	"dependencies": {
-		"serialport": "^8.0.7"
+		"serialport": "^11.0.0"
 	},
 	"devDependencies": {
-		"eslint": "^6.8.0"
+		"eslint": "^8.43.0"
 	}
 }
